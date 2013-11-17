@@ -47,7 +47,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
+ 
 CRON_CLASSES = (
         'schedule.views.MyCronJob',
         'schedule.views.checkSwagbucksCode',
