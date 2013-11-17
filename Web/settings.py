@@ -7,12 +7,19 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
+CRON_CLASSES = (
+        #'schedule.views.MyCronJob',
+        'schedule.views.checkSwagbucksCode',
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pythoneverywhere@gmail.com'
+EMAIL_HOST_PASSWORD = 'apple4you'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -37,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_cron',
+    'schedule',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,10 +56,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
  
-CRON_CLASSES = (
-        'schedule.views.MyCronJob',
-        'schedule.views.checkSwagbucksCode',
-)
 
 ROOT_URLCONF = 'Web.urls'
 
