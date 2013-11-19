@@ -33,17 +33,17 @@ class checkSwagbucksCode(CronJobBase):
             if parser.parse(value["expires"]) > now:
                 active.update({key:{'Code': value['code'],
                     'Worth': value['worth'], 
-                    'Expires':str(value['expires'])}})
+                    'Expires':parser.parse(value["expires"])}})
             else:
                 expired.update({key:{'Code': value['code'],
                     'Worth': value['worth'], 
-                    'Expires':str(value['expires'])}})
+                    'Expires':parser.parse(value["expires"])}})
 
         for key, value in expired.iteritems() :
             try:
                 change = swagCode.objects.get(code=value['code'],
                     worth = value['worth'],
-                    expires = value['expires'])
+                    expires = parser.parse(value["expires"]))
                 change.isActive = False
                 change.save()
             except:
@@ -53,7 +53,7 @@ class checkSwagbucksCode(CronJobBase):
             try:
                 swagCode.object.get(code=value['code'],
                     worth = value['worth'],
-                    expires = value['expires'])
+                    expires = parser.parse(value["expires"]))
                 #data in the database
             except:
                 from django.contrib.auth.models import User
@@ -67,23 +67,24 @@ class checkSwagbucksCode(CronJobBase):
 
                 swagCode(code=value['code'],
                     worth=value['worth'],
-                    expires=value['expires'],
+                    expires=parser.parse(value["expires"]),
                     isActive=value['isActive']).save()
                 #send user email new code is here
                 self.code = "'schedule.swagCode ("+value['code']+")"
                 send_mail(value['code']+" "+value['worth'], 'Have Fun!', settings.EMAIL_HOST_USER,
                     emailList, fail_silently=False)
 
+        
+        #swagCode.objects.latest("id")
         '''
-        swagCode.objects.latest("id")
-
         for key, value in result.iteritems() :
+            
             swagCode(code=value['code'],
                 worth=value['worth'],
-                expires=value['expires'],
+                expires=parser.parse(value["expires"]),
                 isActive=value['isActive']).save()
             #print value
-        '''
+        ''' 
 
         
 
