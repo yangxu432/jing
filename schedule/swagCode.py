@@ -5,9 +5,9 @@ import re
 import json
 def openPage():
     #68.180.195.138:80
-    #proxy = urllib2.ProxyHandler({'http': '68.180.195.138:80'})
-    #opener = urllib2.build_opener(proxy)
-    opener = urllib2.build_opener()
+    proxy = urllib2.ProxyHandler({'http': '31.135.196.229:8080'})
+    opener = urllib2.build_opener(proxy)
+    #opener = urllib2.build_opener()
     http_header = {
                     "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.46 Safari/535.11",
                     "Accept" : "text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,text/png,*/*;q=0.5",
@@ -20,8 +20,8 @@ def openPage():
     opener.addheaders = [('User-Agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) ')]
 
     urllib2.install_opener(opener)
-    
-    content = urllib2.urlopen('http://sc-s.com/').read()
+    content = urllib2.urlopen('http://www.google.com').read()
+    #content = urllib2.urlopen('http://sc-s.com/').read()
     result = re.compile('<div class="p_code_data"(.*?)>', re.DOTALL).findall(content)
 
     return getElement(result)
