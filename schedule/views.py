@@ -14,7 +14,7 @@ class MyCronJob(CronJobBase):
 class checkSwagbucksCode(CronJobBase):
     RUN_EVERY_MINS = 1
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'schedule.swagCode (Check Swagbucks Code)'
+    code = 'schedule.swagCode '
     def do(self):
         from schedule.swagCode import openPage
         from schedule.models import swagCode
@@ -22,13 +22,15 @@ class checkSwagbucksCode(CronJobBase):
         from django.core.mail import send_mail
         result = openPage()
         import datetime
+        from dateutil import parser
         now = datetime.datetime.now()
+        self.code = self.code+str(now)
         active = {}
         expired = {}
         
         for key, value in result.iteritems() :
 
-            if value["expires"] > now:
+            if parser.parse(value["expires"]) > now:
                 active.update({key:{'Code': value['code'],
                     'Worth': value['worth'], 
                     'Expires':str(value['expires'])}})

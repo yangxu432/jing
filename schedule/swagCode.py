@@ -20,8 +20,8 @@ def openPage():
     opener.addheaders = [('User-Agent', 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1) ')]
 
     urllib2.install_opener(opener)
-    content = urllib2.urlopen('http://www.google.com').read()
-    #content = urllib2.urlopen('http://sc-s.com/').read()
+    #content = urllib2.urlopen('http://www.google.com').read()
+    content = urllib2.urlopen('http://sc-s.com/').read()
     result = re.compile('<div class="p_code_data"(.*?)>', re.DOTALL).findall(content)
 
     return getElement(result)
@@ -72,8 +72,8 @@ def getElement(result):
         print ""
         counter = counter + 1
     '''
-    #for key, value in dic.iteritems() :
-    #    value["expires"] = str(value["expires"])
+    for key, value in dic.iteritems() :
+        value["expires"] = str(value["expires"])
 
     return dic
 
